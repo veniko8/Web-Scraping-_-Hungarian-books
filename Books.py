@@ -6,9 +6,9 @@ from bs4 import BeautifulSoup
 URL = "https://www.libri.hu/fooldal/sikerlistak/cat/"
 r = requests.get(URL)
 
-soup = BeautifulSoup(r.content, features="lxml")  # If this line causes an error, run 'pip install html5lib' or install html5lib
+soup = BeautifulSoup(r.content, features="lxml")  
 
-#print(soup.prettify())
+
 titles=[]
 prices=[]
 links=[]
@@ -41,7 +41,6 @@ for link in links:
     local_soup = BeautifulSoup(x.content, features="lxml")
 
     for a in local_soup.findAll('a', href=True, attrs={'itemprop': 'item'}):
-
         category.append(a.get_text())
     categories.append(category[-1])
 
