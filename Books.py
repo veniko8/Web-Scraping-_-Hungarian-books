@@ -2,6 +2,7 @@ import pandas as pd
 
 import requests
 from bs4 import BeautifulSoup
+import re
 
 URL = "https://www.libri.hu/fooldal/sikerlistak/cat/"
 r = requests.get(URL)
@@ -30,7 +31,11 @@ for x in soup.findAll('span',{'class':'act-price'}):
     for line in text.splitlines():  # line-wise
         line = line.strip()  # remove whitespace
         price += line  # add to address string
-    prices.append(price)
+    price_integers =re.findall(r'\d+',price)
+    if len(price_integers) == 2:
+        prices.append((int(price_integers[0]) * 1000) + int(price_integers[1]))
+    else:
+        prices.append(price_integers[0])
 
 
 #get category
