@@ -1,9 +1,8 @@
 import pandas as pd
-
 import requests
 from bs4 import BeautifulSoup
 import re
-
+import numpy as np
 
 URL_list=['https://www.libri.hu/fooldal/sikerlistak/cat/',]
 
@@ -77,7 +76,10 @@ df = pd.DataFrame({'Book':titles_df,'Price':prices_df,'Category':categories_df, 
 #with pd.option_context('display.max_rows', None, 'display.max_columns', None):
     #print(df)
 
-print(df.describe())
+av_price_per_category=df.groupby(['Category'], as_index=False)['Price'].mean()
+av_price_per_category.plot()
+plt.xticks(np.arange(len(av_price_per_category['Category'])), av_price_per_category['Category'], rotation=90)
+plt.show()
 
 
 
